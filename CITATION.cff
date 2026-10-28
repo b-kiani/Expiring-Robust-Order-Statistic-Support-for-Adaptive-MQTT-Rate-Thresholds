@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Expiring Robust Order-Statistic Support for Adaptive MQTT Rate Thresholds under Delayed and Unreliable Reviews"
+authors:
+  - family-names: "Kiani"
+    given-names: "Behnam"
+repository-code: "https://github.com/b-kiani/Expiring-Robust-Order-Statistic-Support-for-Adaptive-MQTT-Rate-Thresholds"
+keywords:
+  - MQTT Security
+  - Internet of Things
+  - Adaptive Thresholds
+  - Feedback Poisoning
+license: MIT
