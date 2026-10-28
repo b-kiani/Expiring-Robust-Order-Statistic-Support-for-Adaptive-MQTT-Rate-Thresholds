@@ -1,0 +1,24 @@
+{
+  "checker_version": "1.0",
+  "created_utc": "2026-10-23T18:42:18.624258+00:00",
+  "dataset_root": "C:\\Users\\kiani\\DTESI2027_IoT_Security\\data\\raw\\CSV",
+  "python_version": "3.13.5",
+  "csv_files_found": 309,
+  "headers_read": 309,
+  "files_with_candidate_label_columns": 0,
+  "schema_groups": [
+    {
+      "column_count": 39,
+      "candidate_label_columns": [],
+      "schema_sha256": "26613b15da014ee76b900bc9c07e402525e276ff3d8532c3bc4effa1d651edd7",
+      "files": 309
+    }
+  ],
+  "supporting_files": [
+    "README_CSV.pdf"
+  ],
+  "archives_not_opened": [],
+  "traversal_errors": [],
+  "label_status": "Not verified. Header names and folder names do not establish row-level labels.",
+  "scope": "Header inventory only; no row counts, values, full-file hashes or chronology verified."
+}
