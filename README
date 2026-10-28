@@ -1,0 +1,179 @@
+# Expiring Robust Order-Statistic Support for Adaptive MQTT Rate Thresholds
+
+This repository contains the implementation and experimental artifacts for the article:
+
+> **Expiring Robust Order-Statistic Support for Adaptive MQTT Rate Thresholds under Delayed and Unreliable Reviews**
+
+## Overview
+
+Internet of Things (IoT) platforms commonly use per-client rate thresholds to identify abnormal activity from authenticated MQTT publishers. Static thresholds are simple but may generate excessive alerts when legitimate workloads grow. Adaptive thresholds can reduce unnecessary alerts but become vulnerable when adaptation relies on delayed, sparse, or incorrect analyst reviews.
+
+This project introduces **Expiring Robust Order-Statistic Support (ROS)**, a review-driven threshold adaptation mechanism that:
+
+- Adapts thresholds using positively reviewed historical activity.
+- Tolerates a configurable number of false-normal reviews.
+- Uses expiring support to limit the influence of outdated observations.
+- Maintains a trusted minimum threshold through an immutable anchor.
+- Provides provable robustness guarantees under feedback poisoning.
+
+The method is designed for analyst-in-the-loop environments where review decisions may arrive late and occasionally contain errors.
+
+---
+
+## Abstract
+
+Adaptive per-client rate thresholds could let Internet of Things (IoT) platforms accept legitimate workload growth from authenticated Message Queuing Telemetry Transport (MQTT) publishers without silencing alerts about unauthorized use, but the reviews that justify adaptation are sparse, delayed and sometimes wrong. We propose expiring robust order-statistic support (ROS), which raises each account’s cutoff only to the (e + 1)-th largest positively reviewed count retained within a fixed lifetime, floored by an immutable trusted anchor.
+
+We prove that e coexisting false-normal reviews cannot lift the cutoff above the largest genuinely normal retained count, that ROS never flags less than its anchor, and that discounting costs an exact clean-tail exceedance of (e + 1)/(k + 1) with k retained reviews.
+
+In a prospectively planned study of 120 localhost broker captures, ROS(2,16) produced 16.13% authorized false alerts, versus 23.83% and 23.73% for pair-certificate baselines and 7.53% for single-review adaptation, and its target recall was unchanged under two state-aware false-normal reviews, whereas single-review adaptation lost 18.83 percentage points.
+
+Exploratory replays show the limits: errors beyond the tolerance reduce recall, genuine traffic in a compromised account can hide piggybacking, and a one-percent support tail needs about 299 retained reviews.
+
+---
+
+## Key Contributions
+
+- Robust threshold adaptation under delayed feedback.
+- Resistance to review poisoning through robust order statistics.
+- Expiring historical support to prevent outdated behavior from permanently influencing thresholds.
+- Formal theoretical guarantees.
+- Experimental evaluation using MQTT broker traffic captures.
+- Reproducible implementation and evaluation workflow.
+
+---
+
+## Repository Structure
+
+```text
+.
+├── src/                # Source code
+├── data/               # Experimental data and captures
+├── experiments/        # Evaluation scripts
+├── results/            # Generated results and figures
+├── docs/               # Documentation
+├── LICENSE
+├── README.md
+└── CITATION.cff
+```
+
+---
+
+## Method Summary
+
+For each account:
+
+1. Maintain positively reviewed observations within a fixed retention lifetime.
+2. Sort retained observations by magnitude.
+3. Let `e` denote the maximum tolerated number of false-normal reviews.
+4. Set the adaptive threshold to the `(e + 1)`-th largest retained reviewed count.
+5. Apply an immutable trusted anchor as a lower bound.
+
+This ensures that up to `e` false-normal reviews cannot elevate the threshold beyond the largest genuinely normal reviewed observation.
+
+---
+
+## Experimental Results
+
+The reported study evaluated ROS under realistic conditions involving delayed and potentially incorrect reviews.
+
+### Main Findings
+
+| Method | Authorized False Alert Rate |
+|----------|---------------------------|
+| Pair-Certificate Baseline A | 23.83% |
+| Pair-Certificate Baseline B | 23.73% |
+| ROS(2,16) | 16.13% |
+| Single-Review Adaptation | 7.53% |
+
+### Poisoning Resistance
+
+Under two state-aware false-normal reviews:
+
+- ROS(2,16) maintained target recall.
+- Single-review adaptation lost 18.83 percentage points of recall.
+
+---
+
+## Requirements
+
+Suggested environment:
+
+- Python 3.10+
+- NumPy
+- Pandas
+- Matplotlib
+- SciPy
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Running Experiments
+
+Example:
+
+```bash
+python run_experiments.py
+```
+
+Generated outputs will be saved under:
+
+```text
+results/
+```
+
+---
+
+## Reproducibility
+
+The repository is intended to support reproducibility of the experiments and theoretical claims reported in the accompanying article. All major evaluation settings, parameters, and scripts should be available within the repository.
+
+---
+
+## Citation
+
+If you use this software, data, or methodology in your research, please cite:
+
+```bibtex
+@article{kiani_ros_mqtt,
+  title={Expiring Robust Order-Statistic Support for Adaptive MQTT Rate Thresholds under Delayed and Unreliable Reviews},
+  author={Kiani, Behnam},
+  year={2026}
+}
+```
+
+If a Zenodo DOI is available, please use the DOI-specific citation provided by Zenodo.
+
+---
+
+## Keywords
+
+MQTT Security, Internet of Things, Adaptive Thresholds, Feedback Poisoning, Delayed Feedback, Order Statistics, Analyst-in-the-Loop Detection, Intrusion Detection.
+
+---
+
+## License
+
+See the LICENSE file for licensing information.
+
+---
+
+## Author
+
+**Dr. Behnam Kiani**
+
+Assistant Professor, Department of Computer Science  
+Central Asian University, Uzbekistan
+
+Research interests include:
+
+- IoT Security
+- Machine Learning
+- Medical Image Analysis
+- Intrusion Detection Systems
+- Robust Statistical Methods
